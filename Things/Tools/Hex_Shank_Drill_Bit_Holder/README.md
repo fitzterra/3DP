@@ -14,7 +14,7 @@ features:
  - Allows easy scaling in the X and Y directions if your printer causes
    the hex holes to be too tight, like mine does.
 
-I use the OpenSCAD fillets lib jfhbrook/openscad-fillets by jhfbrook for
+I use the OpenSCAD fillets lib github/jfhbrook/openscad-fillets by jhfbrook for
 filleting the edges - Thanks jhfbrook!
 
 The `Holder()` module takes all dimensional parameters as arguments, so can
