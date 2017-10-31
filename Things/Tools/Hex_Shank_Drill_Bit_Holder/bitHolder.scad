@@ -25,17 +25,16 @@
 // Thanks jfhbrook!
 use <fillets.scad>;
 
-// Original dimension
-rows = 2;       // Number of rows
-columns = 5;    // Number of columns
-height = 32;    // Height above footer
-foot = 3;       // Height of the footer
-scl = 1.00;     // Scaling in the X and Y direction - defaults to 1:1
-
-// My overrides
-height = 16;    // Don't want it too high
-foot = 0.5;     // Like a flat footer
-scl = 1.09;     // Works well on my printer
+// Number of rows
+rows = 2;
+// Number of columns
+columns = 5;
+// Height of the footer
+foot = 0.5;
+// Height above footer
+height = 16;
+// Scaling for print tolerances (only X/Y, not Z)
+scl = 1.00; //[0.90:0.01:1.20]
 
 
 /**
