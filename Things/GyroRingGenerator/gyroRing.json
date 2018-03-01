@@ -1,0 +1,21 @@
+{
+    "parameterSets": {
+        "3RingQuick": {
+            "$fn": "50",
+            "centerHole": "4",
+            "gap": "0.5",
+            "height": "18",
+            "innerDia": "16",
+            "keyRing": "false",
+            "krEliptical": "0.5",
+            "krInnerDia": "5",
+            "krOffs": "-3",
+            "krOrient": "v",
+            "krOuterDia": "9",
+            "ringW": "2",
+            "rings": "3",
+            "sliceCenter": "false"
+        }
+    },
+    "fileFormatVersion": "1"
+}
