@@ -33,7 +33,7 @@ centerHole=4.0;
 // Width for ring walls at ring equators.
 ringW = 2.0;
 // Spacing between rings.
-gap = 0.5;
+gap = 0.6;
 // Number of rings, including center ring or ball.
 rings = 6;
 // Height for the gyro.
