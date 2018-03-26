@@ -1,0 +1,26 @@
+{
+    "parameterSets": {
+        "RoHS-Spoolx5": {
+            "$fn": "100",
+            "dColor": "DarkOrange",
+            "eqNumDrawers": "5",
+            "equalSize": "true",
+            "fThickness": "2",
+            "fillGap": "1",
+            "fillWidth": "true",
+            "height": "30",
+            "innerDia": "90",
+            "mode": "assembly",
+            "openAngle": "50",
+            "outerDia": "198",
+            "sColor": "DimGray",
+            "screwSize": "4",
+            "shDia": "54",
+            "showSpool": "true",
+            "swWidth": "4",
+            "wThickness": "2",
+            "width": "56"
+        }
+    },
+    "fileFormatVersion": "1"
+}
