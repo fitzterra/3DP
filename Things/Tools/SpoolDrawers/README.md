@@ -199,7 +199,7 @@ Pictures
 [drawerbase]: images/DrawerBase.png
 [drawerconf]: images/DrawerConf.png
 [drawercolor]: images/DrawerColor.png
-[draweropen]: images/DrawerAngel.png "Open Drawer. Also note drawerHeight is set and dual layer is off."
+[draweropen]: images/DrawerAngle.png "Open Drawer. Also note drawerHeight is set and dual layer is off."
 [testmode]: images/TesterMode.png
 [printmode]: images/PrintMode.png "This is dual layers. Single layer will generate only one drawer."
 [templatemode]: images/TemplateMode.png
