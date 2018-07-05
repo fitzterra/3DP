@@ -45,13 +45,23 @@
  *  - Allow different size drawers around the circumference. The current
  *    customizer componets for variable definition is a bit limiting, so maybe
  *    another day.
+ *
+ * Releases:
+ *  v1.0 - Initial release, but did not contain version numberthen
+ *  v1.1 - Fixed bug in generating the hinge holes and add option for finger
+ *         notch instead of handle. With the changes in the hinge hole
+ *         generation, drawers created with the same parameters in v1.0 will
+ *         **not** align with v1.1 and later drawers!
  */
+
+/* [Hidden] */
+version = "v1.1";
 
 /* [ General parameters ] */
 // Granularity for mainly hinge chamber cylinder and handle rounded edge.
 $fn = 120;
 // What to generate? The template can be used to drill holes for the hinge shafts.
-mode = "assembly"; // [assembly, print, tester, template]
+mode = "assembly"; // [assembly, print, tester, template1, template2, template3]
 // Show the spool in assembly mode?
 showSpool = true;
 
@@ -81,7 +91,7 @@ drawBT = 3;
 // Drawer hinge pin outer diameter.
 hingePinOD = 5;
 // Hinge pin housing outer diameter.
-hingeHousingOD = hingePinOD+2;
+hingeHousingOD = hingePinOD+3;
 // Drawers Color - See OpenSCAD color transformation for color names.
 drawColor = "RoyalBlue";
 
@@ -92,6 +102,8 @@ numDrawers = 4; // [2:1:5]
 dualLayer = true;
 // Gap between dual layers
 layersGap = 1;
+// Handle or finger notch to open drawer with
+handle = false;
 // Angle to open one drawer for testing in assembly mode
 openAngle = 10; // [0:5:90]
 
@@ -122,10 +134,10 @@ module arc(spoolOR, spoolIR, angle) {
     difference() {
         polygon(concat([[0, 0]], points_outer));
         polygon(concat([[0, 0]], points_inner));
-        translate([spoolOR-hingeHousingOD,hingeHousingOD,0])
+        translate([spoolOR-hingeHousingOD/2,hingeHousingOD/2,0])
             circle(hingePinOD/2);
-        translate([spoolOR-hingeHousingOD,0,0])
-            square(hingeHousingOD);
+        translate([spoolOR-hingeHousingOD/2,0,0])
+            square(hingeHousingOD/2);
     }
 }
 
@@ -148,29 +160,40 @@ module handle(angle) {
 
 module screw(){
     difference() {
-        circle(hingeHousingOD);
-        circle(hingePinOD/2);
+        circle(d=hingeHousingOD);
+        circle(d=hingePinOD);
     }    
 }
 
 module drawer(angle, height) {
-    // The floor
-    linear_extrude(drawBT)
-        arc(spoolOR, spoolIR, angle);
 
-    // Walls
-    linear_extrude(height)
-        shell(angle);
-
-    // Rounded screw chamber
-    translate([spoolOR-hingeHousingOD,hingeHousingOD,0])
-        linear_extrude(height)
-            screw();
-
-    // Drawer handle
-    linear_extrude(height)
-        handle(angle);
+    fnd = 25;
+    difference() {
+        union() {
+            // The floor
+            linear_extrude(drawBT)
+                arc(spoolOR, spoolIR, angle);
+            // Walls
+            linear_extrude(height)
+                shell(angle);
+            // Rounded screw chamber
+            translate([spoolOR-hingeHousingOD/2,hingeHousingOD/2,0])
+                linear_extrude(height)
+                    screw();
+            // Drawer handle
+            if(handle)
+                linear_extrude(height)
+                    handle(angle);
+        }
+        // Finger notch if no handle
+        if(!handle && height>(fnd/2))
+            rotate([0, 0, drawerAngel-12])
+            translate([spoolOR+spoolWW/2, 0, height+fnd/10])
+                rotate([0, -90, 0])
+                    cylinder(d=fnd, h=spoolWW*2);
+    }
 }
+
 
 module spool() {
     color(spoolColor)
@@ -190,7 +213,7 @@ module spool() {
     color("silver")
     for (n=[0:drawerAngel:359])
         rotate([0, 0, n])
-            translate([spoolOR-hingeHousingOD, hingeHousingOD, -spoolWW-0.1])
+            translate([spoolOR-hingeHousingOD/2, hingeHousingOD/2, -spoolWW-0.1])
                 cylinder(d=hingePinOD, h=spoolIH+spoolWW*2+0.2);
 }
 
@@ -204,8 +227,41 @@ module holesTemplate() {
         // Hinge holes
         for (n=[0:drawerAngel:359])
             rotate([0, 0, n])
-                translate([spoolOR-hingeHousingOD, hingeHousingOD, -0.1])
+                translate([spoolOR-hingeHousingOD/2, hingeHousingOD/2, -0.1])
                     cylinder(d=hingePinOD, h=1.2);
+    }
+}
+
+module holesTemplate2() {
+    th = 1.2;
+    for (n=[0:drawerAngel:359])
+        rotate([0, 0, n])
+            difference() {
+                hull() {
+                    cylinder(d=3, h=th);
+                    translate([spoolOR-hingeHousingOD/2, hingeHousingOD/2, 0])
+                        cylinder(d=hingePinOD+3, h=th);
+                }
+                translate([spoolOR-hingeHousingOD/2, hingeHousingOD/2, -0.1])
+                    cylinder(d=2, h=th+0.2);
+            }
+    difference() {
+        cylinder(d=spoolHubID+4, h=th);
+        translate([0, 0, -0.1])
+            cylinder(d=spoolHubID, h=th+0.2);
+    }
+    difference() {
+        cylinder(d=spoolOD/1.5+4, h=th);
+        translate([0, 0, -0.1])
+            cylinder(d=spoolOD/1.5, h=th+0.2);
+    }
+}
+
+module holesTemplate3() {
+    difference() {
+        holesTemplate();
+        translate([0, 0, -0.1])
+            cylinder(r=spoolOR-hingeHousingOD, h=2);
     }
 }
 
@@ -214,9 +270,9 @@ module drawersLayer(height) {
         rotate([0, 0, n])
             drawer(drawerAngel-1, height);
     
-    translate([spoolOR-hingeHousingOD, hingeHousingOD, 0])
+    translate([spoolOR-hingeHousingOD/2, hingeHousingOD/2, 0])
         rotate([0, 0, -openAngle])
-            translate([-spoolOR+hingeHousingOD, -hingeHousingOD, 0])
+            translate([-spoolOR+hingeHousingOD/2, -hingeHousingOD/2, 0])
                 drawer(drawerAngel-1, height);
 }
 
@@ -241,8 +297,12 @@ if(mode=="assembly") {
         translate([0, -spoolOR, 0])
             rotate([0, 0, 90-drawerAngel/2])
                 drawer(drawerAngel-1, d2Height);
-} else if(mode=="template") {
+} else if(mode=="template1") {
     holesTemplate();
+} else if(mode=="template2") {
+    holesTemplate2();
+} else if(mode=="template3") {
+    holesTemplate3();
 } else if(mode=="tester") {
     difference() {
         translate([0, -spoolIR*cos(drawerAngel/2), -drawBT-0.1])
@@ -252,4 +312,3 @@ if(mode=="assembly") {
             cylinder(d=spoolOD*1.5, h=drawBT+1.1);
     }
 }
-

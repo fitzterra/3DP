@@ -4,9 +4,10 @@ Putting empty filament spools to good use
 **Table of Contents**
 1. [Introduction](#introduction)
 2. [Features](#features)
-3. [Usage](#usage)
-4. [Finishing off](#finishing-off)
-5. [Pictures](#pictures)
+3. [Versions](#versions)
+4. [Usage](#usage)
+5. [Finishing off](#finishing-off)
+6. [Pictures](#pictures)
 
 Introduction
 ------------
@@ -51,17 +52,21 @@ Features
   drawers will be drawn in print mode.
 * Can generate a thin tester outline of the drawer to test fit the spool
   before final print.
-* Can generate a template for exact drilling of the hinge holes in the
+* Can generate templates for exact drilling of the hinge holes in the
   spool. See note below.
 * Color support in assembly mode.
 
-**Note on the template option:**  
-The SVG and DFX exports in the current nightly build of OpenSCAD I'm using
-does not seem to be working, so the only way to use the template from here
-is to export as STL and then import into some 3D CAD program, like FreeCAD,
-generate a solid from the STL, and then a top view drawing. This drawing can
-then be exported to PDF and printed on paper. Hope this would be easier in a
-future version of OpenSCAD :-)
+[TOC]
+
+----
+
+Versions
+--------
+* **v1.0** - First release
+* **v1.1** - Fixed bug in generating the hinge holes and add option for finger
+             notch instead of handle. With the changes in the hinge hole
+             generation, drawers created with the same parameters in v1.0 will
+             **not** align with v1.1 and later drawers!
 
 [TOC]
 
@@ -100,7 +105,10 @@ your spool holder and requirements. The general order is normally:
    Here you can also select or unselect _dual layers_ if `drawHeight` is not
    zero.  
    With dual layers, you can also adjust the gap between the layers with the
-   `layersGap` parameter.
+   `layersGap` parameter.  
+   Here you also select whether to have a handle (original) or newer finger
+   notch option for access to open drawer. The default now is the finger notch
+   since it prints quicker and saves plastic.
    ![Drawer Config][drawerconf]  
 
 5. In `assembly` mode, you can simulate opening one of the drawers by adjusting
@@ -119,21 +127,44 @@ your spool holder and requirements. The general order is normally:
    ![Test Mode][testmode]  
 
 8. Once you are ready to generate the STLs for printing, change the mode to
-   `print` in the **General parameters** section. If you have dual layers, then
-   a model for one drawer from each layer will be generated.  
+   `print` in the **General parameters** section. If you have dual drawer
+   layers, then a model for one drawer from each layer will be generated.  
    ![Print Mode][printmode]  
 
-9. While the drawers are printing, you can generate the hinge drill template by
-   setting the mode to `template` in the **General parameters** section. This
-   will generate a 1mm thick template that fits on the spool outside and gives
-   the exact drill locations.  
-   The idea is to export this as a DWG or SVG file, then print a 2D copy at the
-   exact dimension on paper as a template. My current version of OpenSCAD does
-   not do the export to SVG or DWG, so I have to generate and STL from this
-   template. The STL I then import into FreeCAD, make it a solid and then crate
-   a top view drawing from this solid. This I then print to paper as the
-   template. Hopefully this will be resolved in a future version of OpenSCAD.
-   ![Template Mode][templatemode]  
+9. To drill holes in the exact spots for the hinges in the spool, you can
+   generate a template by setting the mode to one of the `template?` modes in
+   the **General parameters** section.:
+   ![Template1 Mode][template1mode]  
+   ![Template2 Mode][template2mode]  
+   ![Template3 Mode][template3mode]  
+
+   Templates 2 and 3 could be 3D printed if your print area is large enough and
+   you want a template that can be used on future spools of the same size.
+   Template1 you probably do not want to print.
+
+   Another option is to export the template as a DWG or SVG file, then print a
+   2D copy at the exact dimension on paper as a template. My current version of
+   OpenSCAD does not do the export to SVG or DWG, so this does not help.
+
+   One way around that is to export a **top view**, as large as possible on
+   screen, to and image format like PNG from OpenSCAD. I then open this PNG in
+   the [Gimp], but almost any other image manipulation program should do.
+
+   Once opened, I crop the image right at the edges to ensure that the edges of
+   my spool template fills the width/height of the image, resulting in a square
+   image with the spool edges at the image edges.
+
+   Since template2 does not represent the full spool outline, this method is not
+   recommended for that template.
+
+   With the spool outline filling image, and knowing the diameter of the spool,
+   it is now a simple matter of scaling the image to be equal to the exact spool
+   diameter in both X and Y directions. The [Gimp] allows entering millimeter
+   sizes for scaling, so this makes it very easy.  
+   ![Gimp crop and scale][gimpcropscale]  
+
+   From here the image can be manipulated (remove the black, for example) and
+   printed to the correct scale on paper.
 
 [TOC]
 
@@ -192,6 +223,7 @@ Pictures
 [color]: https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Transformations#color
 [spool holders]: https://www.thingiverse.com/thing:596838
 [Sylvain Rochette]: https://www.thingiverse.com/labidus/about
+[Gimp]: https://www.gimp.org/
 
 <!-- Image links -->
 [assymode]: images/AssemblyMode.png
@@ -202,4 +234,7 @@ Pictures
 [draweropen]: images/DrawerAngle.png "Open Drawer. Also note drawerHeight is set and dual layer is off."
 [testmode]: images/TesterMode.png
 [printmode]: images/PrintMode.png "This is dual layers. Single layer will generate only one drawer."
-[templatemode]: images/TemplateMode.png
+[template1mode]: images/Template1Mode.png
+[template2mode]: images/Template2Mode.png
+[template3mode]: images/Template3Mode.png
+[gimpcropscale]: images/GimpCrop.png
