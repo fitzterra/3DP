@@ -8,8 +8,9 @@
  *    sides. This is nice if the hex shank has the bit size stamped on it.
  *  - Footer height can be adjusted
  *  - Height can be adjusted
- *  - Allows easy scaling in the X and Y directions if your printer causes
- *    the hex holes to be too tight, like mine does.
+ *  - Gaps between rows and columns can be adjusted
+ *  - Edge width can be adjusted
+ *  - Hole size and round or hex shape can be set
  *
  * Author: Fitzterra <fitz_subs@icave.net>  - July 2016
  *
@@ -26,15 +27,10 @@
  * this file.
  * This is because on Thingiverse you can not use custom external scad files
  * when using the customizer.
- * 
- * The original source for this can be fount at:
- * https://github.com/fitzterra/3DP/tree/master/Things/Tools/Hex_Shank_Drill_Bit_Holder
+ *
+ * Fillets library from:
+ * https://github.com/jfhbrook/openscad-fillets/blob/master/fillets.scad
  **/
-
-// Fillets library from:
-// https://github.com/jfhbrook/openscad-fillets/blob/master/fillets.scad
-// Thanks jfhbrook!
-//use <fillets.scad>;
 
 // Number of rows
 rows = 2;

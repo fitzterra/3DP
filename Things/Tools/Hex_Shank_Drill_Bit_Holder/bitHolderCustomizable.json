@@ -1,0 +1,18 @@
+{
+    "parameterSets": {
+        "NeedleFileHolder": {
+            "colsEdge": "2",
+            "colsGap": "4.5",
+            "columns": "5",
+            "fRad": "1",
+            "foot": "0.5",
+            "height": "30",
+            "holeDia": "3.5",
+            "holeShape": "round",
+            "rows": "2",
+            "rowsEdge": "-0.4",
+            "rowsGap": "4.5"
+        }
+    },
+    "fileFormatVersion": "1"
+}
