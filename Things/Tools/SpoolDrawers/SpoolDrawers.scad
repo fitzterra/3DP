@@ -52,10 +52,12 @@
  *         notch instead of handle. With the changes in the hinge hole
  *         generation, drawers created with the same parameters in v1.0 will
  *         **not** align with v1.1 and later drawers!
+ *  v1.2 - Now able to export SVG/DXF templates from OpenSCAD after learning
+ *         that OpenSCAD can only do these exports from 2D objects!
  */
 
 /* [Hidden] */
-version = "v1.1";
+version = "v1.2";
 
 /* [ General parameters ] */
 // Granularity for mainly hinge chamber cylinder and handle rounded edge.
