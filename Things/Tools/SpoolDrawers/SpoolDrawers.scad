@@ -64,6 +64,8 @@ $fn = 120;
 mode = "assembly"; // [assembly, print, tester, template1, template2, template3]
 // Show the spool in assembly mode?
 showSpool = true;
+// Project templates in 2D to enable export as SVG or DXF?
+template2D = false;
 
 /* [ Spool dimensions ] */
 // Spool inner diameter.
@@ -80,6 +82,8 @@ spoolWW = 4;
 spoolHubID = 54;
 // Spool color - See OpenSCAD color transformation for color names.
 spoolColor = "DimGray";
+// Spool color alpha - For transparent spool holders (does not render 100% as expected :-( )
+spoolColorAlpha = 1.0; // [0.0:0.05:1.0]
 
 /* [ Drawer Base ] */
 // Drawer height - leave 0 to use spoolIH and 1mm clearance.
@@ -196,7 +200,7 @@ module drawer(angle, height) {
 
 
 module spool() {
-    color(spoolColor)
+    color(spoolColor, spoolColorAlpha)
     difference() {
         union() {
             // Center cylinder
@@ -298,11 +302,26 @@ if(mode=="assembly") {
             rotate([0, 0, 90-drawerAngel/2])
                 drawer(drawerAngel-1, d2Height);
 } else if(mode=="template1") {
-    holesTemplate();
+    if (template2D==true) {
+        projection()
+            holesTemplate();
+    } else {
+       holesTemplate();
+    }
 } else if(mode=="template2") {
-    holesTemplate2();
+    if (template2D==true) {
+        projection()
+            holesTemplate2();
+    } else {
+       holesTemplate2();
+    }
 } else if(mode=="template3") {
-    holesTemplate3();
+    if (template2D==true) {
+        projection()
+            holesTemplate3();
+    } else {
+       holesTemplate3();
+    }
 } else if(mode=="tester") {
     difference() {
         translate([0, -spoolIR*cos(drawerAngel/2), -drawBT-0.1])

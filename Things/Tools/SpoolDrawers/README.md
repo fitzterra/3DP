@@ -142,29 +142,13 @@ your spool holder and requirements. The general order is normally:
    you want a template that can be used on future spools of the same size.
    Template1 you probably do not want to print.
 
-   Another option is to export the template as a DWG or SVG file, then print a
-   2D copy at the exact dimension on paper as a template. My current version of
-   OpenSCAD does not do the export to SVG or DWG, so this does not help.
+   Another option is to export the template as a DXF or SVG file, then print a
+   2D copy at the exact dimension on paper as a template.
 
-   One way around that is to export a **top view**, as large as possible on
-   screen, to and image format like PNG from OpenSCAD. I then open this PNG in
-   the [Gimp], but almost any other image manipulation program should do.
-
-   Once opened, I crop the image right at the edges to ensure that the edges of
-   my spool template fills the width/height of the image, resulting in a square
-   image with the spool edges at the image edges.
-
-   Since template2 does not represent the full spool outline, this method is not
-   recommended for that template.
-
-   With the spool outline filling image, and knowing the diameter of the spool,
-   it is now a simple matter of scaling the image to be equal to the exact spool
-   diameter in both X and Y directions. The [Gimp] allows entering millimeter
-   sizes for scaling, so this makes it very easy.  
-   ![Gimp crop and scale][gimpcropscale]  
-
-   From here the image can be manipulated (remove the black, for example) and
-   printed to the correct scale on paper.
+   In order to export as SVG/DXF, check the `tempalte2D` options under the
+   `General Parameters` section, and once the display has updated, **Render**
+   the template (press **F6**). The result will be a 2D rendition than can now
+   be exported as an SVG or DXF file.
 
 [TOC]
 

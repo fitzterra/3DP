@@ -20,6 +20,30 @@
             "swWidth": "4",
             "wThickness": "2",
             "width": "56"
+        },
+        "eSunClear": {
+            "$fn": "100",
+            "drawBT": "2",
+            "drawColor": "Orange",
+            "drawHeight": "38",
+            "drawWW": "2",
+            "dualLayer": "true",
+            "handle": "false",
+            "hingePinOD": "3",
+            "layersGap": "1",
+            "mode": "assembly",
+            "numDrawers": "5",
+            "openAngle": "65",
+            "showSpool": "true",
+            "spoolColor": "White",
+            "spoolColorAlpha": "0.4",
+            "spoolHubID": "52",
+            "spoolID": "93",
+            "spoolIH": "55",
+            "spoolOD": "199",
+            "spoolWW": "4",
+            "template2D": "true",
+            "version": "v1.1"
         }
     },
     "fileFormatVersion": "1"
